@@ -2,9 +2,9 @@ package persistence.sistema;
 
 import javax.persistence.EntityManager;
 
-import persistence.basedatos.RepositorioLibrosPersistente;
 import persistence.configuracion.ConexionJPA;
 import persistence.configuracion.Transaccion;
+import persistence.repositorio.RepositorioLibrosPersistente;
 import repositorio.RepositorioLibros;
 
 public class SistemaDePersistencia implements Transaccion {

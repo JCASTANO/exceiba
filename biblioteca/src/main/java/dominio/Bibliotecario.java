@@ -22,7 +22,6 @@ public class Bibliotecario {
 		if(!esPrestado(isbn)) {
 			Libro libroAPrestar = repositorioLibros.obtenerLibroDisponiblePorIsbn(isbn);
 			repositorioLibros.agregarLibroPrestados(libroAPrestar);
-			//repositorioLibros.removerLibroDisponibles(libroAPrestar);
 			emailSenderService.sendEmail(LIBRO_PRESTADO_EXITOSAMENTE);
 		}
 		else {

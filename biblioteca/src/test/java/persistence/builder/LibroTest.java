@@ -1,9 +1,10 @@
-package entity;
+package persistence.builder;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import persistence.JPAHibernateTest;
 import persistence.entitad.LibroEntity;
 
 public class LibroTest extends JPAHibernateTest {
