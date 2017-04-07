@@ -1,8 +1,9 @@
 package repositorio;
 
 import dominio.Libro;
+import persistence.configuracion.Transaccion;
 
-public interface RepositorioLibros {
+public interface RepositorioLibros extends Transaccion {
 
 	Libro obtenerLibroPrestadoPorIsbn(String isbn);
 
@@ -11,7 +12,5 @@ public interface RepositorioLibros {
 	void agregarLibroPrestados(Libro libro);
 
 	void agregarLibroDisponibles(Libro libro);
-
-	void removerLibroDisponibles(Libro libro);
 
 }

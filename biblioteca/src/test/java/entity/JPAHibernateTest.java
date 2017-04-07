@@ -4,6 +4,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -23,11 +24,15 @@ public class JPAHibernateTest {
 	public void beforeTest() {
 		entityManager = entityManagerFactory.createEntityManager();
 	}
+	
+	@After
+	public void afterTest() {
+		entityManager.clear();
+		entityManager.close();
+	}
 
 	@AfterClass
 	public static void tearDown() {
-		entityManager.clear();
-		entityManager.close();
 		entityManagerFactory.close();
 	}
 }
