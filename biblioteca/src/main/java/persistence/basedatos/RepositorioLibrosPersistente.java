@@ -8,8 +8,8 @@ import javax.persistence.Query;
 
 import dominio.Libro;
 import persistence.builder.LibroBuilder;
-import persistence.entity.LibroEntity;
-import persistence.entity.PrestamoEntity;
+import persistence.entitad.LibroEntity;
+import persistence.entitad.PrestamoEntity;
 import repositorio.RepositorioLibros;
 
 public class RepositorioLibrosPersistente implements RepositorioLibros {
@@ -23,7 +23,7 @@ public class RepositorioLibrosPersistente implements RepositorioLibros {
 	@Override
 	public Libro obtenerLibroPrestadoPorIsbn(String isbn) {
 		PrestamoEntity prestamoEntity = obtenerPrestamoEntityPorIsbn(isbn);
-		
+
 		return LibroBuilder.convertirADominio(prestamoEntity != null ? prestamoEntity.getLibro() : null);
 	}
 
@@ -32,22 +32,22 @@ public class RepositorioLibrosPersistente implements RepositorioLibros {
 		Query query = entityManeger.createNamedQuery("Prestamo.findByIsbn");
 		query.setParameter("isbn", isbn);
 		List resultList = query.getResultList();
-		return !resultList.isEmpty() ? (PrestamoEntity)resultList.get(0) : null;
+		return !resultList.isEmpty() ? (PrestamoEntity) resultList.get(0) : null;
 	}
 
 	@Override
 	public Libro obtenerLibroDisponiblePorIsbn(String isbn) {
 		LibroEntity libroEntity = obtenerLibroEntityPorIsbn(isbn);
-		
+
 		return LibroBuilder.convertirADominio(libroEntity);
 	}
 
 	@Override
 	public void agregarLibroPrestados(Libro libro) {
 		LibroEntity libroEntity = obtenerLibroEntityPorIsbn(libro.getIsbn());
-		
+
 		PrestamoEntity prestamoEntity = buildPrestamoEntity(libroEntity);
-		
+
 		entityManeger.merge(prestamoEntity);
 	}
 
@@ -66,17 +66,8 @@ public class RepositorioLibrosPersistente implements RepositorioLibros {
 	private LibroEntity obtenerLibroEntityPorIsbn(String isbn) {
 		Query query = entityManeger.createNamedQuery("Libro.findByIsbn");
 		query.setParameter("isbn", isbn);
-		
+
 		return (LibroEntity) query.getSingleResult();
 	}
 
-	@Override
-	public void iniciar() {
-		entityManeger.getTransaction().begin();
-	}
-
-	@Override
-	public void terminar() {
-		entityManeger.getTransaction().commit();
-	}
 }

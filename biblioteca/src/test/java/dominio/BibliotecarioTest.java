@@ -9,29 +9,31 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import builder.LibroTestDataBuilder;
-import builder.RepositorioLibrosPersistenteTestDataBuilder;
 import exepcion.PrestamoException;
-import persistence.basedatos.RepositorioLibrosPersistente;
-import persistence.configuracion.ConexionJPA;
+import persistence.sistema.SistemaDePersistencia;
 import repositorio.RepositorioLibros;
 import service.EmailService;
 
 public class BibliotecarioTest {
 
+	SistemaDePersistencia sistemaPersistencia;
 	RepositorioLibros repositorioLibros;
 
 	@Before
 	public void setUp() {
-		repositorioLibros = new RepositorioLibrosPersistente(new ConexionJPA().createEntityManager());
-		repositorioLibros.iniciar();
+		sistemaPersistencia = new SistemaDePersistencia();
+		repositorioLibros = sistemaPersistencia.obtenerRepositorioLibros();
+		sistemaPersistencia.iniciar();
+		
 	}
 
 	@Test
 	public void prestarLibroTest() {
 
+		
 		// arrange
 		Libro libro = new LibroTestDataBuilder().conTitutlo("Cronica de una muerta anunciada").build();
-		new RepositorioLibrosPersistenteTestDataBuilder(repositorioLibros).conLibroDisponible(libro).build();
+		repositorioLibros.agregarLibroDisponibles(libro);
 		Bibliotecario blibliotecario = new Bibliotecario(repositorioLibros, createEmailService());
 
 		// act
@@ -48,8 +50,7 @@ public class BibliotecarioTest {
 
 		// arrange
 		Libro libro = new LibroTestDataBuilder().conTitutlo("Cronica de una muerta anunciada").build();
-		new RepositorioLibrosPersistenteTestDataBuilder(repositorioLibros).conLibroDisponible(libro).build();
-
+		repositorioLibros.agregarLibroDisponibles(libro);
 		Bibliotecario blibliotecario = new Bibliotecario(repositorioLibros, createEmailService());
 
 		// act
@@ -69,7 +70,7 @@ public class BibliotecarioTest {
 
 	@After
 	public void tearDown() {
-		repositorioLibros.terminar();
+		sistemaPersistencia.terminar();
 	}
 
 }

@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import persistence.entity.LibroEntity;
+import persistence.entitad.LibroEntity;
 
 public class LibroTest extends JPAHibernateTest {
 

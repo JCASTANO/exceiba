@@ -1,7 +1,7 @@
 package persistence.builder;
 
 import dominio.Libro;
-import persistence.entity.LibroEntity;
+import persistence.entitad.LibroEntity;
 
 public class LibroBuilder {
 	

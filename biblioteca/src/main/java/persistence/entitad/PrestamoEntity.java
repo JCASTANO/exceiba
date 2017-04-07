@@ -1,4 +1,4 @@
-package persistence.entity;
+package persistence.entitad;
 
 import java.util.Date;
 

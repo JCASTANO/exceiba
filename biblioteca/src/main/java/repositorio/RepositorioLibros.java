@@ -1,9 +1,8 @@
 package repositorio;
 
 import dominio.Libro;
-import persistence.configuracion.Transaccion;
 
-public interface RepositorioLibros extends Transaccion {
+public interface RepositorioLibros{
 
 	Libro obtenerLibroPrestadoPorIsbn(String isbn);
 
