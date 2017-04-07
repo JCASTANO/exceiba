@@ -1,4 +1,4 @@
-package persistence.configuracion;
+package persistencia.conexion;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

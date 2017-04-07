@@ -1,4 +1,4 @@
-package service;
+package servicio;
 
 import java.util.Properties;
 
@@ -11,7 +11,8 @@ import javax.mail.internet.MimeMessage;
 
 import org.apache.log4j.Logger;
 
-import exepcion.EmailSenderException;
+import dominio.excepcion.EnvioEmailException;
+import dominio.servicio.EmailService;
 
 public class GmailEmailService implements EmailService {
 	
@@ -35,7 +36,7 @@ public class GmailEmailService implements EmailService {
 	}
 
 	@Override
-	public void sendEmail(String text){
+	public void enviarEmail(String mensaje){
 
 		init();
 		try{
@@ -43,14 +44,14 @@ public class GmailEmailService implements EmailService {
 			message.setFrom(new InternetAddress((String)properties.get("mail.smtp.mail.sender")));
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress("juan.botero@ceiba.com.co"));
 			message.setSubject("Prueba");
-			message.setText(text);
+			message.setText(mensaje);
 			Transport t = session.getTransport("smtp");
 			t.connect((String)properties.get("mail.smtp.user"), (String) properties.get("mail.smtp.password"));
 			t.sendMessage(message, message.getAllRecipients());
 			t.close();
 		}catch (MessagingException e){
 			LOGGER.error(e.getMessage(), e);
-            throw new EmailSenderException(e.getMessage());
+            throw new EnvioEmailException(e.getMessage());
 		}
 		
 	}

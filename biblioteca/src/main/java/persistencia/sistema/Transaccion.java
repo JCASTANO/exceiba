@@ -1,4 +1,4 @@
-package persistence.configuracion;
+package persistencia.sistema;
 
 public interface Transaccion {
 	

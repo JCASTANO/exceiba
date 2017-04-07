@@ -1,18 +1,18 @@
 package dominio;
 
-import exepcion.PrestamoException;
-import repositorio.RepositorioLibros;
-import service.EmailService;
+import dominio.excepcion.PrestamoException;
+import dominio.repositorio.RepositorioLibro;
+import dominio.servicio.EmailService;
 
 public class Bibliotecario {
 
 	private static final String LIBRO_PRESTADO_EXITOSAMENTE = "Libro prestado exitosamente";
 	public static final String EL_LIBRO_NO_SE_ENCUENTRA_DISPONIBLE = "El libro no se encuentra disponible";
 	
-	private RepositorioLibros repositorioLibros;
+	private RepositorioLibro repositorioLibros;
 	private EmailService emailSenderService;
 
-	public Bibliotecario(RepositorioLibros repositorioLibros, EmailService emailService) {
+	public Bibliotecario(RepositorioLibro repositorioLibros, EmailService emailService) {
 		this.repositorioLibros = repositorioLibros;
 		this.emailSenderService = emailService;
 
@@ -20,9 +20,9 @@ public class Bibliotecario {
 
 	public void prestar(String isbn) {
 		if(!esPrestado(isbn)) {
-			Libro libroAPrestar = repositorioLibros.obtenerLibroDisponiblePorIsbn(isbn);
-			repositorioLibros.agregarLibroPrestados(libroAPrestar);
-			emailSenderService.sendEmail(LIBRO_PRESTADO_EXITOSAMENTE);
+			Libro libroAPrestar = repositorioLibros.obtenerDisponiblePorIsbn(isbn);
+			repositorioLibros.agregarPrestado(libroAPrestar);
+			emailSenderService.enviarEmail(LIBRO_PRESTADO_EXITOSAMENTE);
 		}
 		else {
 			throw new PrestamoException(EL_LIBRO_NO_SE_ENCUENTRA_DISPONIBLE);
@@ -31,7 +31,7 @@ public class Bibliotecario {
 
 	public boolean esPrestado(String isbn) {
 
-		return repositorioLibros.obtenerLibroPrestadoPorIsbn(isbn) != null;
+		return repositorioLibros.obtenerPrestadoPorIsbn(isbn) != null;
 
 	}
 

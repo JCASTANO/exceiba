@@ -8,16 +8,16 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import builder.LibroTestDataBuilder;
-import exepcion.PrestamoException;
-import persistence.sistema.SistemaDePersistencia;
-import repositorio.RepositorioLibros;
-import service.EmailService;
+import dominio.excepcion.PrestamoException;
+import dominio.repositorio.RepositorioLibro;
+import dominio.servicio.EmailService;
+import persistencia.sistema.SistemaDePersistencia;
+import testdatabuilder.LibroTestDataBuilder;
 
 public class BibliotecarioTest {
 
 	SistemaDePersistencia sistemaPersistencia;
-	RepositorioLibros repositorioLibros;
+	RepositorioLibro repositorioLibros;
 
 	@Before
 	public void setUp() {
@@ -33,7 +33,7 @@ public class BibliotecarioTest {
 		
 		// arrange
 		Libro libro = new LibroTestDataBuilder().conTitutlo("Cronica de una muerta anunciada").build();
-		repositorioLibros.agregarLibroDisponibles(libro);
+		repositorioLibros.agregarDisponible(libro);
 		Bibliotecario blibliotecario = new Bibliotecario(repositorioLibros, createEmailService());
 
 		// act
@@ -41,7 +41,7 @@ public class BibliotecarioTest {
 
 		// assert
 		Assert.assertTrue(blibliotecario.esPrestado(libro.getIsbn()));
-		Assert.assertNotNull(repositorioLibros.obtenerLibroPrestadoPorIsbn(libro.getIsbn()));
+		Assert.assertNotNull(repositorioLibros.obtenerPrestadoPorIsbn(libro.getIsbn()));
 
 	}
 
@@ -50,7 +50,7 @@ public class BibliotecarioTest {
 
 		// arrange
 		Libro libro = new LibroTestDataBuilder().conTitutlo("Cronica de una muerta anunciada").build();
-		repositorioLibros.agregarLibroDisponibles(libro);
+		repositorioLibros.agregarDisponible(libro);
 		Bibliotecario blibliotecario = new Bibliotecario(repositorioLibros, createEmailService());
 
 		// act

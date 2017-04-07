@@ -1,4 +1,4 @@
-package persistence.repositorio;
+package persistencia.repositorio;
 
 import java.util.Date;
 import java.util.List;
@@ -7,21 +7,21 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import dominio.Libro;
-import persistence.builder.LibroBuilder;
-import persistence.entitad.LibroEntity;
-import persistence.entitad.PrestamoEntity;
-import repositorio.RepositorioLibros;
+import dominio.repositorio.RepositorioLibro;
+import persistencia.builder.LibroBuilder;
+import persistencia.entitad.LibroEntity;
+import persistencia.entitad.PrestamoEntity;
 
-public class RepositorioLibrosPersistente implements RepositorioLibros {
+public class RepositorioLibroPersistente implements RepositorioLibro {
 
 	private EntityManager entityManeger;
 
-	public RepositorioLibrosPersistente(EntityManager entityManeger) {
+	public RepositorioLibroPersistente(EntityManager entityManeger) {
 		this.entityManeger = entityManeger;
 	}
 
 	@Override
-	public Libro obtenerLibroPrestadoPorIsbn(String isbn) {
+	public Libro obtenerPrestadoPorIsbn(String isbn) {
 		PrestamoEntity prestamoEntity = obtenerPrestamoEntityPorIsbn(isbn);
 
 		return LibroBuilder.convertirADominio(prestamoEntity != null ? prestamoEntity.getLibro() : null);
@@ -36,14 +36,14 @@ public class RepositorioLibrosPersistente implements RepositorioLibros {
 	}
 
 	@Override
-	public Libro obtenerLibroDisponiblePorIsbn(String isbn) {
+	public Libro obtenerDisponiblePorIsbn(String isbn) {
 		LibroEntity libroEntity = obtenerLibroEntityPorIsbn(isbn);
 
 		return LibroBuilder.convertirADominio(libroEntity);
 	}
 
 	@Override
-	public void agregarLibroPrestados(Libro libro) {
+	public void agregarPrestado(Libro libro) {
 		LibroEntity libroEntity = obtenerLibroEntityPorIsbn(libro.getIsbn());
 
 		PrestamoEntity prestamoEntity = buildPrestamoEntity(libroEntity);
@@ -59,7 +59,7 @@ public class RepositorioLibrosPersistente implements RepositorioLibros {
 	}
 
 	@Override
-	public void agregarLibroDisponibles(Libro libro) {
+	public void agregarDisponible(Libro libro) {
 		entityManeger.merge(LibroBuilder.convertirAEntity(libro));
 	}
 

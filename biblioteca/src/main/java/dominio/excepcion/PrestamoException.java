@@ -1,4 +1,4 @@
-package exepcion;
+package dominio.excepcion;
 
 public class PrestamoException extends RuntimeException {
 

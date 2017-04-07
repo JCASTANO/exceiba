@@ -1,11 +1,10 @@
-package persistence.sistema;
+package persistencia.sistema;
 
 import javax.persistence.EntityManager;
 
-import persistence.configuracion.ConexionJPA;
-import persistence.configuracion.Transaccion;
-import persistence.repositorio.RepositorioLibrosPersistente;
-import repositorio.RepositorioLibros;
+import dominio.repositorio.RepositorioLibro;
+import persistencia.conexion.ConexionJPA;
+import persistencia.repositorio.RepositorioLibroPersistente;
 
 public class SistemaDePersistencia implements Transaccion {
 
@@ -15,8 +14,8 @@ public class SistemaDePersistencia implements Transaccion {
 		this.entityManager = new ConexionJPA().createEntityManager();
 	}
 
-	public RepositorioLibros obtenerRepositorioLibros() {
-		return new RepositorioLibrosPersistente(entityManager);
+	public RepositorioLibro obtenerRepositorioLibros() {
+		return new RepositorioLibroPersistente(entityManager);
 	}
 
 	@Override
