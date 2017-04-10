@@ -4,8 +4,8 @@ import dominio.Libro;
 
 public interface RepositorioLibro {
 
-	Libro obtenerDisponiblePorIsbn(String isbn);
+	Libro obtenerPorIsbn(String isbn);
 
-	void agregarDisponible(Libro libro);
+	void agregar(Libro libro);
 
 }

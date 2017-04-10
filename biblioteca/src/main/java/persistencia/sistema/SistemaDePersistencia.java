@@ -21,7 +21,7 @@ public class SistemaDePersistencia implements Transaccion {
 	}
 	
 	public RepositorioPrestamo obtenerRepositorioPrestamos() {
-		return new RepositorioPrestamoPersistente(entityManager);
+		return new RepositorioPrestamoPersistente(entityManager, this.obtenerRepositorioLibros());
 	}
 
 	@Override

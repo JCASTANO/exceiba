@@ -33,10 +33,9 @@ public class BibliotecarioTest {
 	@Test
 	public void prestarLibroTest() {
 
-		
 		// arrange
 		Libro libro = new LibroTestDataBuilder().conTitutlo("Cronica de una muerta anunciada").build();
-		repositorioLibros.agregarDisponible(libro);
+		repositorioLibros.agregar(libro);
 		Bibliotecario blibliotecario = new Bibliotecario(repositorioLibros, repositorioPrestamo, createEmailService());
 
 		// act
@@ -53,7 +52,7 @@ public class BibliotecarioTest {
 
 		// arrange
 		Libro libro = new LibroTestDataBuilder().conTitutlo("Cronica de una muerta anunciada").build();
-		repositorioLibros.agregarDisponible(libro);
+		repositorioLibros.agregar(libro);
 		Bibliotecario blibliotecario = new Bibliotecario(repositorioLibros, repositorioPrestamo, createEmailService());
 
 		// act

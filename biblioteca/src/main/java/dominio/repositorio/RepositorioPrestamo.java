@@ -1,11 +1,12 @@
 package dominio.repositorio;
 
 import dominio.Libro;
+import dominio.Prestamo;
 
 public interface RepositorioPrestamo {
 
-	void agregar(Libro libro);
-
 	Libro obtenerLibroPrestadoPorIsbn(String isbn);
+	
+	void agregar(Prestamo prestamo);
 
 }

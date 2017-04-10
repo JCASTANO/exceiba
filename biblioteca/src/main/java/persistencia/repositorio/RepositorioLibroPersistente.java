@@ -8,7 +8,7 @@ import dominio.repositorio.RepositorioLibro;
 import persistencia.builder.LibroBuilder;
 import persistencia.entitad.LibroEntity;
 
-public class RepositorioLibroPersistente implements RepositorioLibro {
+public class RepositorioLibroPersistente implements RepositorioLibro, RepositorioLibroJPA {
 
 	private EntityManager entityManeger;
 
@@ -17,18 +17,19 @@ public class RepositorioLibroPersistente implements RepositorioLibro {
 	}	
 
 	@Override
-	public Libro obtenerDisponiblePorIsbn(String isbn) {
+	public Libro obtenerPorIsbn(String isbn) {
 		LibroEntity libroEntity = obtenerLibroEntityPorIsbn(isbn);
 
 		return LibroBuilder.convertirADominio(libroEntity);
 	}
 
 	@Override
-	public void agregarDisponible(Libro libro) {
-		entityManeger.merge(LibroBuilder.convertirAEntity(libro));
+	public void agregar(Libro libro) {
+		entityManeger.persist(LibroBuilder.convertirAEntity(libro));
 	}
 
-	private LibroEntity obtenerLibroEntityPorIsbn(String isbn) {
+	@Override
+	public LibroEntity obtenerLibroEntityPorIsbn(String isbn) {
 		Query query = entityManeger.createNamedQuery("Libro.findByIsbn");
 		query.setParameter("isbn", isbn);
 

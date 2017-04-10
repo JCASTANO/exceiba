@@ -7,6 +7,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import dominio.Libro;
+import dominio.Prestamo;
+import dominio.repositorio.RepositorioLibro;
 import dominio.repositorio.RepositorioPrestamo;
 import persistencia.builder.LibroBuilder;
 import persistencia.entitad.LibroEntity;
@@ -14,19 +16,22 @@ import persistencia.entitad.PrestamoEntity;
 
 public class RepositorioPrestamoPersistente implements RepositorioPrestamo {
 
-	private EntityManager entityManeger;
+	private EntityManager entityManager;
 
-	public RepositorioPrestamoPersistente(EntityManager entityManeger) {
-		this.entityManeger = entityManeger;
+	private RepositorioLibroJPA repositorioLibroJPA;
+	
+	public RepositorioPrestamoPersistente(EntityManager entityManager, RepositorioLibro repositorioLibro) {
+		this.entityManager = entityManager;
+		this.repositorioLibroJPA = (RepositorioLibroJPA) repositorioLibro;
 	}
 
 	@Override
-	public void agregar(Libro libro) {
-		LibroEntity libroEntity = obtenerLibroEntityPorIsbn(libro.getIsbn());
+	public void agregar(Prestamo prestamo) {
+		LibroEntity libroEntity = repositorioLibroJPA.obtenerLibroEntityPorIsbn(prestamo.getLibro().getIsbn());
 
-		PrestamoEntity prestamoEntity = buildPrestamoEntity(libroEntity);
+		PrestamoEntity prestamoEntity = buildPrestamoEntity(libroEntity,prestamo.getFecha());
 
-		entityManeger.merge(prestamoEntity);
+		entityManager.persist(prestamoEntity);
 	}
 	
 	@Override
@@ -38,24 +43,16 @@ public class RepositorioPrestamoPersistente implements RepositorioPrestamo {
 
 	@SuppressWarnings("rawtypes")
 	private PrestamoEntity obtenerPrestamoEntityPorIsbn(String isbn) {
-		Query query = entityManeger.createNamedQuery("Prestamo.findByIsbn");
+		Query query = entityManager.createNamedQuery("Prestamo.findByIsbn");
 		query.setParameter("isbn", isbn);
 		List resultList = query.getResultList();
 		return !resultList.isEmpty() ? (PrestamoEntity) resultList.get(0) : null;
 	}
 
-	private PrestamoEntity buildPrestamoEntity(LibroEntity libroEntity) {
+	private PrestamoEntity buildPrestamoEntity(LibroEntity libroEntity,Date fecha) {
 		PrestamoEntity prestamoEntity = new PrestamoEntity();
 		prestamoEntity.setLibro(libroEntity);
-		prestamoEntity.setFecha(new Date());
+		prestamoEntity.setFecha(fecha);
 		return prestamoEntity;
 	}
-
-	private LibroEntity obtenerLibroEntityPorIsbn(String isbn) {
-		Query query = entityManeger.createNamedQuery("Libro.findByIsbn");
-		query.setParameter("isbn", isbn);
-
-		return (LibroEntity) query.getSingleResult();
-	}
-
 }
