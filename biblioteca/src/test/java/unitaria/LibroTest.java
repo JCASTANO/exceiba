@@ -1,9 +1,10 @@
-package dominio;
+package unitaria;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import dominio.Libro;
 import testdatabuilder.LibroTestDataBuilder;
 
 public class LibroTest {

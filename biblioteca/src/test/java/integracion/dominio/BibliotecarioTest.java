@@ -1,4 +1,4 @@
-package dominio;
+package integracion.dominio;
 
 import static org.junit.Assert.fail;
 
@@ -8,6 +8,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import dominio.Bibliotecario;
+import dominio.Libro;
 import dominio.excepcion.PrestamoException;
 import dominio.repositorio.RepositorioLibro;
 import dominio.repositorio.RepositorioPrestamo;
