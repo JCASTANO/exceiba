@@ -10,6 +10,7 @@ import org.mockito.Mockito;
 
 import dominio.excepcion.PrestamoException;
 import dominio.repositorio.RepositorioLibro;
+import dominio.repositorio.RepositorioPrestamo;
 import dominio.servicio.EmailService;
 import persistencia.sistema.SistemaDePersistencia;
 import testdatabuilder.LibroTestDataBuilder;
@@ -18,11 +19,13 @@ public class BibliotecarioTest {
 
 	SistemaDePersistencia sistemaPersistencia;
 	RepositorioLibro repositorioLibros;
+	RepositorioPrestamo repositorioPrestamo;
 
 	@Before
 	public void setUp() {
 		sistemaPersistencia = new SistemaDePersistencia();
 		repositorioLibros = sistemaPersistencia.obtenerRepositorioLibros();
+		repositorioPrestamo = sistemaPersistencia.obtenerRepositorioPrestamos();
 		sistemaPersistencia.iniciar();
 		
 	}
@@ -34,14 +37,14 @@ public class BibliotecarioTest {
 		// arrange
 		Libro libro = new LibroTestDataBuilder().conTitutlo("Cronica de una muerta anunciada").build();
 		repositorioLibros.agregarDisponible(libro);
-		Bibliotecario blibliotecario = new Bibliotecario(repositorioLibros, createEmailService());
+		Bibliotecario blibliotecario = new Bibliotecario(repositorioLibros, repositorioPrestamo, createEmailService());
 
 		// act
 		blibliotecario.prestar(libro.getIsbn());
 
 		// assert
 		Assert.assertTrue(blibliotecario.esPrestado(libro.getIsbn()));
-		Assert.assertNotNull(repositorioLibros.obtenerPrestadoPorIsbn(libro.getIsbn()));
+		Assert.assertNotNull(repositorioPrestamo.obtenerLibroPrestadoPorIsbn(libro.getIsbn()));
 
 	}
 
@@ -51,7 +54,7 @@ public class BibliotecarioTest {
 		// arrange
 		Libro libro = new LibroTestDataBuilder().conTitutlo("Cronica de una muerta anunciada").build();
 		repositorioLibros.agregarDisponible(libro);
-		Bibliotecario blibliotecario = new Bibliotecario(repositorioLibros, createEmailService());
+		Bibliotecario blibliotecario = new Bibliotecario(repositorioLibros, repositorioPrestamo, createEmailService());
 
 		// act
 		blibliotecario.prestar(libro.getIsbn());

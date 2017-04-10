@@ -3,8 +3,10 @@ package persistencia.sistema;
 import javax.persistence.EntityManager;
 
 import dominio.repositorio.RepositorioLibro;
+import dominio.repositorio.RepositorioPrestamo;
 import persistencia.conexion.ConexionJPA;
 import persistencia.repositorio.RepositorioLibroPersistente;
+import persistencia.repositorio.RepositorioPrestamoPersistente;
 
 public class SistemaDePersistencia implements Transaccion {
 
@@ -17,6 +19,10 @@ public class SistemaDePersistencia implements Transaccion {
 	public RepositorioLibro obtenerRepositorioLibros() {
 		return new RepositorioLibroPersistente(entityManager);
 	}
+	
+	public RepositorioPrestamo obtenerRepositorioPrestamos() {
+		return new RepositorioPrestamoPersistente(entityManager);
+	}
 
 	@Override
 	public void iniciar() {
@@ -27,5 +33,7 @@ public class SistemaDePersistencia implements Transaccion {
 	public void terminar() {
 		entityManager.getTransaction().commit();
 	}
+
+	
 
 }
