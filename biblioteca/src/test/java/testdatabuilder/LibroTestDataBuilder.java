@@ -4,17 +4,21 @@ import dominio.Libro;
 
 public class LibroTestDataBuilder {
 
+	private static final int ANIO = 2010;
+	private static final String TITULO = "Cien años de soledad";
+	private static final String ISBN = "1234";
+	
 	private String isbn;
 	private String titulo;
 	private int anio;
 
 	public LibroTestDataBuilder() {
-		this.isbn = "1234";
-		this.titulo = "Cien años de soledad";
-		this.anio = 2010;
+		this.isbn = ISBN;
+		this.titulo = TITULO;
+		this.anio = ANIO;
 	}
 
-	public LibroTestDataBuilder conTitutlo(String titulo) {
+	public LibroTestDataBuilder conTitulo(String titulo) {
 		this.titulo = titulo;
 		return this;
 	}
@@ -30,7 +34,6 @@ public class LibroTestDataBuilder {
 	}
 
 	public Libro build() {
-		return new Libro(isbn, titulo, anio);
+		return new Libro(this.isbn, this.titulo, this.anio);
 	}
-
 }

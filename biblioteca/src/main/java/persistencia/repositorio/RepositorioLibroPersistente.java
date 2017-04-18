@@ -11,14 +11,19 @@ import persistencia.repositorio.jpa.RepositorioLibroJPA;
 
 public class RepositorioLibroPersistente implements RepositorioLibro, RepositorioLibroJPA {
 
-	private EntityManager entityManeger;
+	private static final String ISBN = "isbn";
+	private static final String LIBRO_FIND_BY_ISBN = "Libro.findByIsbn";
+	
+	private EntityManager entityManager;
 
-	public RepositorioLibroPersistente(EntityManager entityManeger) {
-		this.entityManeger = entityManeger;
+	public RepositorioLibroPersistente(EntityManager entityManager) {
+		
+		this.entityManager = entityManager;
 	}	
 
 	@Override
 	public Libro obtenerPorIsbn(String isbn) {
+		
 		LibroEntity libroEntity = obtenerLibroEntityPorIsbn(isbn);
 
 		return LibroBuilder.convertirADominio(libroEntity);
@@ -26,13 +31,15 @@ public class RepositorioLibroPersistente implements RepositorioLibro, Repositori
 
 	@Override
 	public void agregar(Libro libro) {
-		entityManeger.persist(LibroBuilder.convertirAEntity(libro));
+		
+		entityManager.persist(LibroBuilder.convertirAEntity(libro));
 	}
 
 	@Override
 	public LibroEntity obtenerLibroEntityPorIsbn(String isbn) {
-		Query query = entityManeger.createNamedQuery("Libro.findByIsbn");
-		query.setParameter("isbn", isbn);
+		
+		Query query = entityManager.createNamedQuery(LIBRO_FIND_BY_ISBN);
+		query.setParameter(ISBN, isbn);
 
 		return (LibroEntity) query.getSingleResult();
 	}

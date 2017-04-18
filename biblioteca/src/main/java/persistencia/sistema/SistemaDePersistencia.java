@@ -8,7 +8,7 @@ import persistencia.conexion.ConexionJPA;
 import persistencia.repositorio.RepositorioLibroPersistente;
 import persistencia.repositorio.RepositorioPrestamoPersistente;
 
-public class SistemaDePersistencia implements Transaccion {
+public class SistemaDePersistencia {
 
 	private EntityManager entityManager;
 
@@ -24,16 +24,11 @@ public class SistemaDePersistencia implements Transaccion {
 		return new RepositorioPrestamoPersistente(entityManager, this.obtenerRepositorioLibros());
 	}
 
-	@Override
 	public void iniciar() {
 		entityManager.getTransaction().begin();
 	}
 
-	@Override
 	public void terminar() {
 		entityManager.getTransaction().commit();
 	}
-
-	
-
 }
