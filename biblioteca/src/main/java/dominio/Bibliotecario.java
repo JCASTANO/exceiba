@@ -1,6 +1,5 @@
 package dominio;
 
-import dominio.excepcion.PrestamoException;
 import dominio.repositorio.RepositorioLibro;
 import dominio.repositorio.RepositorioPrestamo;
 
@@ -18,21 +17,15 @@ public class Bibliotecario {
 	}
 
 	public void prestar(String isbn) {
-		
-		if (!esPrestado(isbn)) {
-			
-			Libro libroAPrestar = repositorioLibro.obtenerPorIsbn(isbn);
-			
-			repositorioPrestamo.agregar(crearPrestamo(libroAPrestar));
-		} else {
-			throw new PrestamoException(EL_LIBRO_NO_SE_ENCUENTRA_DISPONIBLE);
-		}
+
+		throw new UnsupportedOperationException("Método pendiente por implementar");
+
 	}
 
 	public boolean esPrestado(String isbn) {
 		return repositorioPrestamo.obtenerLibroPrestadoPorIsbn(isbn) != null;
 	}
-	
+
 	private Prestamo crearPrestamo(Libro libro) {
 		return new Prestamo(libro);
 	}
