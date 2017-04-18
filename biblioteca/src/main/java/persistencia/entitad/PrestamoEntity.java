@@ -22,7 +22,7 @@ public class PrestamoEntity {
 	@JoinColumn(name="ID_LIBRO",referencedColumnName="id")
 	private LibroEntity libro;
 	
-	private Date fecha;
+	private Date fechaSolicitud;
 	
 	public Long getId() {
 		return id;
@@ -40,11 +40,11 @@ public class PrestamoEntity {
 		this.libro = libroEntity;
 	}
 	
-	public Date getFecha() {
-		return fecha;
+	public Date getFechaSolicitud() {
+		return fechaSolicitud;
 	}
 	
-	public void setFecha(Date fecha) {
-		this.fecha = fecha;
+	public void setFechaSolicitud(Date fechaSolicitud) {
+		this.fechaSolicitud = fechaSolicitud;
 	}
 }

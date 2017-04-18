@@ -4,16 +4,16 @@ import java.util.Date;
 
 public class Prestamo {
 
-	private Date fecha;
+	private Date fechaSolicitud;
 	private Libro libro;
 	
-	public Prestamo(Date fecha, Libro libro) {
-		this.fecha = fecha;
+	public Prestamo(Libro libro) {
+		this.fechaSolicitud = new Date();
 		this.libro = libro;
 	}
 	
-	public Date getFecha() {
-		return fecha;
+	public Date getFechaSolicitud() {
+		return fechaSolicitud;
 	}
 	
 	public Libro getLibro() {

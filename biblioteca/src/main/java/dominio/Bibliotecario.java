@@ -1,7 +1,5 @@
 package dominio;
 
-import java.util.Date;
-
 import dominio.excepcion.PrestamoException;
 import dominio.repositorio.RepositorioLibro;
 import dominio.repositorio.RepositorioPrestamo;
@@ -25,7 +23,7 @@ public class Bibliotecario {
 			
 			Libro libroAPrestar = repositorioLibro.obtenerPorIsbn(isbn);
 			
-			repositorioPrestamo.agregar(crearPrestamo(new Date(), libroAPrestar));
+			repositorioPrestamo.agregar(crearPrestamo(libroAPrestar));
 		} else {
 			throw new PrestamoException(EL_LIBRO_NO_SE_ENCUENTRA_DISPONIBLE);
 		}
@@ -35,7 +33,7 @@ public class Bibliotecario {
 		return repositorioPrestamo.obtenerLibroPrestadoPorIsbn(isbn) != null;
 	}
 	
-	private Prestamo crearPrestamo(Date fecha, Libro libro) {
-		return new Prestamo(fecha, libro);
+	private Prestamo crearPrestamo(Libro libro) {
+		return new Prestamo(libro);
 	}
 }
