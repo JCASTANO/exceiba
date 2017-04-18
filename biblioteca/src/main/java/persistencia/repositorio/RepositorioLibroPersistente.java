@@ -7,6 +7,7 @@ import dominio.Libro;
 import dominio.repositorio.RepositorioLibro;
 import persistencia.builder.LibroBuilder;
 import persistencia.entitad.LibroEntity;
+import persistencia.repositorio.jpa.RepositorioLibroJPA;
 
 public class RepositorioLibroPersistente implements RepositorioLibro, RepositorioLibroJPA {
 

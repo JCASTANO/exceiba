@@ -1,4 +1,4 @@
-package integracion.dominio;
+package dominio.integracion;
 
 import static org.junit.Assert.fail;
 

@@ -1,4 +1,4 @@
-package unitaria;
+package dominio.unitaria;
 
 import static org.junit.Assert.assertEquals;
 

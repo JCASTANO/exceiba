@@ -13,6 +13,7 @@ import dominio.repositorio.RepositorioPrestamo;
 import persistencia.builder.LibroBuilder;
 import persistencia.entitad.LibroEntity;
 import persistencia.entitad.PrestamoEntity;
+import persistencia.repositorio.jpa.RepositorioLibroJPA;
 
 public class RepositorioPrestamoPersistente implements RepositorioPrestamo {
 

@@ -1,4 +1,4 @@
-package persistencia.repositorio;
+package persistencia.repositorio.jpa;
 
 import persistencia.entitad.LibroEntity;
 
